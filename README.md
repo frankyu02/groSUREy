@@ -4,12 +4,6 @@
 - [Installation instructions](https://git.uwaterloo.ca/f48yu/FJDK/-/wikis/Installation-Instructions)
 - [Software releases](https://git.uwaterloo.ca/f48yu/FJDK/-/releases)
 
-## Created by
-- Frank Yu
-- Jagvir Dehal
-- Dev Pancea
-- Kirollos Botros
-
 ## Project Plan
 
 ### Goals:
