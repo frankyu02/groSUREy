@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997978894256",
+    "project_id": "fjdk-1875d",
+    "storage_bucket": "fjdk-1875d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997978894256:android:5424ccd199d5270b89f075",
+        "android_client_info": {
+          "package_name": "fjdk.grocery.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZX6pef01o4zKoO6tmhe_fwOY_MyA7uqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

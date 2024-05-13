@@ -1,0 +1,38 @@
+CS 346: Meeting Minutes
+Date:  ____Nov 8________________			Team:  218__________
+
+Present: Dev Jag Kiro Frank
+Absent:
+
+Agenda
+Status update, next steps
+
+Notes
+- We have dummy login endpoints now (contract shouldn't change)
+- Need to implement the firebase side of the auth now
+- Resolved merge request issues in #31
+- Frontend skeleton in place now
+- Continuing to work on tickets for front-end
+- Going to work on storage interface when assignment is done
+    - Look at ReferencesManager
+
+Decisions
+
+Next demo goal:
+
+Frontend:
+- A functioning app that has some pitfalls, but overall works
+- Doesn't have to connect to the backend but code should be in place for that
+
+Backend:
+- Goal is to make sure front-end can send/receive the data
+- Host on some domain
+- At least one endpoint should be somewhat functional for both backend and frontend
+
+
+Actions
+Frank less capacity till sunday
+Dev continue front end work
+Kiro continue backend work
+Jag continue Full stack work, look into how to launch backend on his servers
+

@@ -1,0 +1,114 @@
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Android.gitlab-ci.yml
+
+# Read more about this script on this blog post https://about.gitlab.com/2018/10/24/setting-up-gitlab-ci-for-android-projects/, by Jason Lenny
+# If you are interested in using Android with FastLane for publishing take a look at the Android-Fastlane template.
+
+# Stages
+stages:
+  - build
+  - test
+  - prepare
+  - release
+
+# Pre-built image that contains the Android SDK we're using
+image:
+  name: jdehal/android:latest
+  pull_policy: [ always, if-not-present ]
+
+# Disable daemon for CI builds
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+# Ensure gradlew is executable
+before_script:
+  - chmod +x ./gradlew
+
+build:
+  stage: build
+  except:
+    - tags
+  script: ./gradlew --build-cache assemble
+  after_script:
+    - mv app/build/outputs/apk/debug/app-debug.apk .
+    - mv server/build/distributions/server-*.zip .
+    - mv server/build/distributions/server-*.tar .
+  artifacts:
+    when: on_success
+    expire_in: 7 days
+    paths:
+      - app-debug.apk                 # App APK
+      - server-*.zip                  # Server zip
+      - server-*.tar                  # Server tar
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+
+test:
+  stage: test
+  except:
+    - tags
+  script: ./gradlew check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+
+getcert:
+  stage: .post
+  script: ./gradlew signingReport
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+
+prepare:
+  stage: prepare
+  only:
+    - tags
+  script: ./gradlew build
+  after_script:
+    - mv app/build/outputs/apk/debug/app-debug.apk .
+    - mv server/build/distributions/server*.* .
+    - rm server-shadow*.*
+    - mv app-debug.apk app.apk
+    - mv server*.zip server.zip
+    - mv server*.tar server.tar
+    - echo "JOB_ID=$CI_JOB_ID" >> job.env
+  artifacts:
+    when: on_success
+    expire_in: never
+    paths:
+      - app.apk                 # App APK
+      - server.zip                  # Server zip
+      - server.tar                  # Server tar
+    reports:
+      dotenv: job.env
+
+release:
+  stage: release
+  only:
+    - tags
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  needs:
+    - job: prepare
+      artifacts: true
+  script:
+    - echo "running release_job for $TAG"
+  release:
+    tag_name: '$CI_COMMIT_TAG'
+    description: '$CI_COMMIT_TAG'
+    assets:
+      links:
+        - name: 'Android App'
+          url: 'https://git.uwaterloo.ca/f48yu/FJDK/-/jobs/$JOB_ID/artifacts/raw/app.apk'
+        - name: 'Server (zip)'
+          url: 'https://git.uwaterloo.ca/f48yu/FJDK/-/jobs/$JOB_ID/artifacts/raw/server.zip'
+        - name: 'Server (tar)'
+          url: 'https://git.uwaterloo.ca/f48yu/FJDK/-/jobs/$JOB_ID/artifacts/raw/server.tar'

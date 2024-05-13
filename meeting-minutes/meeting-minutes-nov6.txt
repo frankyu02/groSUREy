@@ -1,0 +1,98 @@
+CS 346: Meeting Minutes
+Date: Nov 6			Team: 218
+
+Present: Jag Dev Frank Kiro
+Absent:
+
+Agenda
+- talk about what we need to do
+- define some api contracts
+-divide remaining work
+-scope down project
+
+Notes
+
+###
+What we need:
+- Creating a list
+    - POST /list/create
+    - return: kitchen ID
+
+- Adding to the list
+    - POST /list/add
+    - Parameters:
+        - header: auth-key
+        - body: JSON-style of the data (name, quantity, etc.)
+    - return: list
+- Remove from the list
+    - POST /list/remove
+
+- Purchasing to the list (incrementing)
+    - POST /list/purchase
+    - return: list
+- Consuming from the list (decrementing)
+    - POST /list/consume
+    - return: list
+
+- Logging in (persistence of data)
+    - Email
+    - Password
+    => Generate & return UUID/auth token
+- Sign up
+    - First name
+    - Last name
+    - Email
+    - Password
+    => Generate & return UUID/auth token
+- Store login/signup data as a cookie on the front-end
+
+
+In action:
+- push button
+=> immediately update the item
+=> backend call to update server
+=> verify you have the same data
+
+
+Backend info to store:
+Lists:
+- Contain info about which users can read/write
+
+Users:
+- Contain info about which lists they can read/write
+
+
+Extra (future):
+- Sharable lists
+    - Codewords: "pizza-trolly-drive"
+    - Invitation email/link
+    - QR Code
+###
+
+Decisions
+- See notes for decisions on contracts
+- scope down to make cloud grocery list main focus
+
+Actions
+
+what we are working on:
+Dev:
+- Simple form to login
+- Login state on the front-end
+- Grocery list adding buttons
+- Finishing the views for the front-end
+
+Jagvir:
+- Create the functions that help interact with the backend (serialization)
+- Interface for interacting with backend
+- Update models to reflect what we want to send/receive
+- Help create some of the backend endpoints
+
+Kiro:
+- User endpoints (login, signup, etc.)
+- Using firebase's authentication service for this
+- Hooking up this functionality to the endpoints
+
+Frank:
+- Creating the backend endpoints
+- For sending/updating the database

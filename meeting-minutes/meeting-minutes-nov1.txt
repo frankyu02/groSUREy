@@ -1,0 +1,20 @@
+CS 346: Meeting Minutes		
+Date:  ____Nov 1________________			Team:  218__________	
+
+Present: Dev Jag
+Absent: No one – Front end meeting
+
+Agenda
+Discuss front end dev design and timelines 
+
+Notes
+Decided to go with sidebar design, similar to other apps
+
+Decisions
+Continue to work on structure of high level app, need to work on individual views next
+
+Actions
+Make tickets for design
+Dev to work on navigation
+Jag to work on Ci/Cd and some front end support
+
